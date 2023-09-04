@@ -59,7 +59,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <div id="cesiumContainer"></div>
+      <div id="cesiumContainer" style={{ width: '100%', height: '100%' }}></div>
     </div>
   );
 }

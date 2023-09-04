@@ -1,4 +1,6 @@
 import { Viewer, Camera, Cartesian3, Math, Ellipsoid } from 'cesium';
+import { getPosition } from '@/utils/getPosition';
+
 
 interface CameraParamsType {
   // degrees 摄像机观看方向
@@ -52,6 +54,7 @@ export default class CameraClass {
     this.camera = viewer.scene.camera;
     this.cameraParams = { ...defaultParams, ...cameraParams };
     this.setInit(gui);
+    this.getInfo();
   }
 
   // 设置初始化
@@ -60,9 +63,24 @@ export default class CameraClass {
     this.setGui(gui, this.cameraParams);
   }
 
+  // 获取信息
+  getInfo () {
+    let { heading, pitch, roll, position, direction } = this.camera;
+    
+    return {
+      position: getPosition(position),
+      direction: getPosition(direction),
+      headingPitchRoll: {
+        // 将弧度转换为度数。
+        heading: Math.toDegrees(heading),
+        pitch: Math.toDegrees(pitch),
+        roll: Math.toDegrees(roll),
+      }
+    }
+  }
+
   // 设置相机参数
   setView(cameraParams: any) {
-    console.log(cameraParams)
     this.camera.setView({
       destination: Cartesian3.fromDegrees(
         cameraParams.position.longitude,
@@ -71,6 +89,7 @@ export default class CameraClass {
         Ellipsoid.WGS84
       ),
       orientation: {
+        // 将度数转换为弧度。
         heading: Math.toRadians(cameraParams.headingPitchRoll.heading),
         pitch: Math.toRadians(cameraParams.headingPitchRoll.pitch),
         roll: Math.toRadians(cameraParams.headingPitchRoll.roll)
@@ -142,6 +161,7 @@ export default class CameraClass {
       .onChange(() => {
         this.setView(cameraParams)
       })
+
 
   }
 }
