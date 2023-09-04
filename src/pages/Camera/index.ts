@@ -83,12 +83,65 @@ export default class CameraClass {
     let cameraFolder = gui.addFolder('Camera 摄像机');
     cameraFolder.open();
 
-    let listen_value = cameraFolder
+    cameraFolder
       .add(cameraParams.position, 'longitude')
       .name('longitude [经度]')
       .min(-360)
       .max(360)
       .step(0.000001)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
+
+    cameraFolder
+      .add(cameraParams.position, 'latitude')
+      .name('latitude [纬度]')
+      .min(-360)
+      .max(360)
+      .step(0.000001)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
+
+    cameraFolder
+      .add(cameraParams.position, 'height')
+      .name('height [高度]')
+      .min(1000)
+      .max(10000000)
+      .step(1)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
+
+    cameraFolder
+      .add(cameraParams.headingPitchRoll, 'heading')
+      .name('heading [朝向度]')
+      .min(-360)
+      .max(360)
+      .step(0.000001)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
+
+    cameraFolder
+      .add(cameraParams.headingPitchRoll, 'pitch')
+      .name('pitch [倾斜度]')
+      .min(-360)
+      .max(360)
+      .step(0.000001)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
+
+    cameraFolder
+      .add(cameraParams.headingPitchRoll, 'roll')
+      .name('roll [翻转度]')
+      .min(-360)
+      .max(360)
+      .step(0.000001)
+      .onChange(() => {
+        this.setView(cameraParams)
+      })
 
   }
 }
