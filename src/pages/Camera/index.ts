@@ -97,6 +97,24 @@ export default class CameraClass {
     })
   }
 
+  // 移动相机
+  setFly(cameraParams: any) {
+    this.camera.flyTo({
+      destination: Cartesian3.fromDegrees(
+        cameraParams.position.longitude,
+        cameraParams.position.latitude,
+        cameraParams.position.height,
+        Ellipsoid.WGS84
+      ),
+      orientation: {
+        // 将度数转换为弧度。
+        heading: Math.toRadians(cameraParams.headingPitchRoll.heading),
+        pitch: Math.toRadians(cameraParams.headingPitchRoll.pitch),
+        roll: Math.toRadians(cameraParams.headingPitchRoll.roll)
+      }
+    })
+  }
+  
   // 设置gui
   setGui(gui: dat.GUI, cameraParams: any) {
     let cameraFolder = gui.addFolder('Camera 摄像机');
